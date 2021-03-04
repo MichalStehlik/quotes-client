@@ -1,24 +1,37 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import {createBrowserHistory} from "history";
+import {Switch, Route, BrowserRouter as Router} from "react-router-dom";
+import {AppProvider} from "./providers/ApplicationProvider";
+import { Container } from 'reactstrap';
+
+import Home from "./components/Home";
+import NotFound from "./components/NotFound";
+import Navigation from "./components/Navigation";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import List from "./components/List";
+import Create from "./components/Create";
+
+const history = createBrowserHistory();
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppProvider>  
+      <Router history={history}>
+        <Navigation />
+        <Container className="main-content">
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={Login} />
+            <Route path="/list" component={List} />
+            <Route path="/create" component={Create} />
+            <Route component={NotFound} />
+          </Switch>
+        </Container>
+      </Router>
+    </AppProvider>
   );
 }
 
